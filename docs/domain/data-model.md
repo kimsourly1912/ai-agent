@@ -46,6 +46,7 @@ These apply to every table unless a row below says otherwise.
 | Status | Use a fixed set of values with a `CHECK` constraint. |
 | Deletion | Business records are archived (`status = 'archived'`). Only records with no history may be deleted. |
 | History | Never delete orders, payments, ledgers, or audit events. Correct them with a new record. |
+| Audit events | Each audit row stores who, what, which tenant, and when. Written in the same atomic write as the change it records. Never updated or deleted. |
 
 ## Entities
 

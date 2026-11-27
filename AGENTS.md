@@ -21,14 +21,15 @@ Replace every `<placeholder>` with your project's value. Delete any section that
 
 ## Essential rules
 
-- Preserve security, permissions, and data integrity. If a business or authorization rule is unclear, ask. Do not guess.
-- Every query on a tenant-owned table names the tenant. Relationships stay within one tenant.
-- Permissions are checked on the server. The UI hiding a button is not a permission check.
-- Never trust the client for identity, roles, ownership, or tenant membership. Derive them from server context.
-- Each module owns its tables. Other modules call its public service. They do not read its repository or write its tables.
-- Every edit sends the version it read. A stale edit returns `409` and changes nothing.
-- Database constraints are the final integrity check. Application validation does not replace them.
-- Do not put secrets, tokens, or real environment values in code, docs, or replies.
+Each rule below is a short pointer. The full rule lives in the linked doc. Do not copy it back into this file.
+
+- Preserve security, permissions, and data integrity. If a rule is unclear, ask. Do not guess. See `docs/standards/security.md`.
+- Tenant data is always scoped to its tenant. See `docs/standards/security.md` and `docs/domain/data-model.md`.
+- The server decides identity and permissions. See `docs/standards/security.md`.
+- Each module owns its tables and is used only through its public service. See `docs/architecture/modules.md`.
+- Edits carry the version that was read. Stale edits are refused. See `docs/standards/api.md`.
+- Database constraints are the final integrity check. See `docs/domain/data-model.md`.
+- Secrets never go into code, docs, or replies. See `docs/standards/security.md`.
 
 ## Load context for the task
 

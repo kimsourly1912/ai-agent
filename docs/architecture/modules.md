@@ -78,7 +78,27 @@ src/
 
 ## Enforcement
 
-Rules that exist only in this doc can be broken without anyone noticing. Enforce rules 1 and 2 with a lint rule or a test. The enforcement method is defined in `docs/standards/testing.md`, once that file exists.
+Rules that exist only in this doc can be broken without anyone noticing. Enforce rule 2 with a lint rule. The example below blocks one module from importing another module's repository. Add one block per pair of modules that must not depend on each other. Check the current ESLint docs for the syntax your version uses.
+
+```js
+// eslint.config.mjs (flat config, illustrative)
+export default [
+  {
+    // Files in the orders module
+    files: ['src/modules/orders/**'],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [{
+          group: ['**/modules/payments/**/*.repository*'],
+          message: 'Import the payments module through its index.ts, not its repository.',
+        }],
+      }],
+    },
+  },
+];
+```
+
+With many modules, one block per pair becomes hard to keep correct. At that point, generate the blocks from the module table above, or use a dependency-check tool.
 
 ## Edge cases
 

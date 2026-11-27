@@ -26,6 +26,8 @@ Resolve tenant: from the URL or session, checked against membership
         ↓
 Authorize: does this user have the named permission in this tenant?
         ↓  no → 403, stop
+Confirm dangerous change (only for actions that need it, see below)
+        ↓  missing → refuse, ask the user to confirm
 Validate input (schema)
         ↓
 Service: business rules, calls repository
@@ -46,6 +48,7 @@ Response: map to the response shape, never return raw rows
 7. **Platform admins do not get tenant data access by default.** If a platform role can act inside a tenant, that must be an explicit, logged permission.
 8. **The UI is not a security boundary.** Hide or disable controls for users who lack the permission, and check again on the server.
 9. **Ownership is a check too.** For a record that belongs to one user, check that the user owns it, not only that they are logged in.
+10. **Privileged writes leave an audit event.** A write that changes access, money, or another member's data records who did it, what changed, which tenant, and when. The audit event is written in the same atomic write as the change. If the audit write fails, the change fails too. Audit records are never updated or deleted.
 
 ## Route checklist
 
@@ -56,6 +59,8 @@ Use this for every route that reads or changes data.
 - [ ] A named permission is checked before any work happens.
 - [ ] Every query names the tenant.
 - [ ] Input is validated against a schema.
+- [ ] A dangerous change asks for re-confirmation after the permission check.
+- [ ] A privileged write records an audit event in the same atomic write.
 - [ ] The response does not include internal columns or secrets.
 - [ ] A test covers: no session, wrong tenant, missing permission, and allowed.
 
