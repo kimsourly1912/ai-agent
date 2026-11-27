@@ -28,7 +28,8 @@ Start here if you are new to this project. Each line says what a doc answers. Re
 ## Decisions and features
 
 - `decisions/README.md`: when to record a decision, how to number it, and the index of decisions.
-- `features/_template.md`: copy this to start a new feature spec.
+- `features/_template.md`: copy this to start a large feature spec, or to document an existing feature.
+- `features/_template-lite.md`: copy this to start a small new feature spec (one screen or one action).
 - `guides/start-a-feature.md`: how to turn an idea into a confirmed spec, for small and large features. It also covers documenting an existing feature, and a checklist for working without the agent. Start here if you are not sure how to describe what you want.
 
 ## Operations

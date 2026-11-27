@@ -4,6 +4,8 @@ Use this guide before you build any feature. It is written for people who are no
 
 Use the **small** flow for one screen or one action. Use the **large** flow for anything that touches several features, adds tables, handles money, or needs more than one permission.
 
+The small flow writes the spec from `docs/features/_template-lite.md`. The large flow, and any feature that already exists in code, use `docs/features/_template.md`.
+
 If the feature already exists in code and has no spec, use **Document an existing feature** first. If you have no agent (for example, your usage ran out), use **Without the agent**. Both are near the end of this guide.
 
 ## Rules for the agent
@@ -79,7 +81,7 @@ Ask these five questions in the question format. Keep them in one message.
 4. What must never happen? Choices: a short list of examples, plus "not sure yet."
 5. What is already decided, and by whom? Ask the user to name the owner.
 
-Then write `docs/features/<name>.md` from the template with `Status: draft`. Show it to the user. Wait for "yes." After "yes," set the status to `confirmed`, with the date and who confirmed it.
+Then write `docs/features/<name>.md` from `docs/features/_template-lite.md` with `Status: draft`. Question 1 and 2 fill **Goal**, question 3 fills **Acceptance criteria**, question 4 fills **Must never happen**, and question 5 fills **Decided rules** and **Open questions**. Show it to the user. Wait for "yes." After "yes," set the status to `confirmed`, with the date and who confirmed it.
 
 ## Large flow
 
@@ -224,4 +226,4 @@ For an existing feature:
 - **The user says "just do it."** Explain in one sentence that the open questions must be answered first, and list them. Offer to build the slices that do not depend on them.
 - **The user does not know the answer to a rule.** Write it as an open question, and write the message for the owner. This is a normal outcome, not a failure.
 - **The owner gives very little context.** Ask the owner the same questions in the message format. Do not fill the gap by guessing.
-- **The feature grows during building.** Stop, update the spec, and confirm with the user before continuing.
+- **The feature grows during building.** Stop, update the spec, and confirm with the user before continuing. If a small feature now has any "Large" signal (a new table, money, a new permission, or a second feature), copy its content into `docs/features/_template.md` and continue with the large flow.
