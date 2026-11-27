@@ -3,6 +3,8 @@
 Defines how screens, data loading, actions, and states are built, so every screen behaves the same way.
 Read this before you add or change a screen. Applies to fullstack and frontend-only projects. Replace every `<placeholder>` with your project's value.
 
+This is a starting draft, built from one feature. Before you rely on it, check each rule against your own code. The agent can already see the patterns your code follows, so a rule that only repeats them adds a second source that can drift. Delete a rule your code already follows everywhere and that has never caused a mistake. Keep a rule that prevents a mistake that has happened, or one the code cannot show, such as why something exists. See "Add a rule only after a mistake" in `docs/README.md`.
+
 ## The problem this solves
 
 Without a standard, each screen loads data in its own way, shows errors in its own way, and forgets some states (loading, empty, failed). The screen also starts to make decisions that only the server can enforce, such as who may approve something. The result looks fine in the happy case and breaks in the others.

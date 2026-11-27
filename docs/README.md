@@ -36,6 +36,32 @@ Start here if you are new to this project. Each line says what a doc answers. Re
 
 - `ops/operations.md`: environments, configuration, migrations, deploy, rollback, and backups.
 
+## Start with the minimum
+
+Do not install every doc on day one. Each doc must be kept true, and a stale rule is worse than no rule. A doc earns its place only when it prevents a mistake that already happened.
+
+**A project where another team owns the API (frontend-only).** Start with:
+
+- `AGENTS.md`, trimmed to the project's real commands and a few rules.
+- `features/_template.md`, `features/_template-lite.md`, and `guides/start-a-feature.md`. These give every feature a spec, and give you a place to resume.
+- `standards/frontend.md`, after you check it against your own code.
+- `domain/glossary.md`, only if domain words confuse the agent.
+
+Add anything else only when a real mistake calls for it.
+
+**A project where you make every decision (your own fullstack or backend-only project).** Start with the full set. Nobody else holds those decisions, so the docs are the only place they live.
+
+## Add a rule only after a mistake
+
+When the agent, or you, make the same mistake twice:
+
+1. Write the mistake in one line.
+2. Find the doc that owns that kind of rule, using the routing table in `AGENTS.md`.
+3. Add one rule there, and keep the mistake as its reason. Do not copy it into another doc.
+4. Create a new doc only when three or more rules cannot fit in an existing one.
+
+When a feature ships, delete any rule that the code already shows everywhere and that nobody needed. A rule that no one checks drifts away from the code.
+
 ## Which docs apply
 
 Set the project type in `AGENTS.md`, then keep, trim, or delete each doc as shown. Record any doc you delete in `docs/decisions/`.
