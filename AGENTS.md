@@ -48,6 +48,7 @@ Classify the change **before you edit**. Then read the docs that apply. Read onl
 | Index of all docs | `docs/README.md` |
 | Why a decision was made | `docs/decisions/` |
 | What a feature must do | `docs/features/<name>.md` (copy `docs/features/_template.md`) |
+| A new feature, from an idea to a confirmed spec | `docs/guides/start-a-feature.md` (do not write code until the spec is confirmed) |
 | Configuration, migrations, deploy, rollback | `docs/ops/operations.md` |
 
 If a doc does not exist yet, say so in your reply. Do not guess its content.
