@@ -46,4 +46,6 @@ What becomes easier, what becomes harder, and what must change elsewhere.
 
 | Number | Title | Status |
 |---|---|---|
-| — | No decisions yet | — |
+| 0001 | Error codes for rule violations (400, 422, 409) | accepted |
+| 0002 | Send the version in the If-Match header | accepted |
+| 0003 | Idempotency keys for money, points, and create requests | accepted |

@@ -58,7 +58,8 @@ Return the response (or a standard error)
 | `401` | No valid session |
 | `403` | Signed in, but not allowed to do this |
 | `404` | Resource does not exist, or it belongs to another tenant |
-| `409` | Conflict: stale version, or a state that does not allow this change |
+| `409` | The request conflicts with the record's current state: a stale version, or a record that has history. See `docs/decisions/0001-business-rule-error-codes.md`. |
+| `422` | The input is valid, but a business rule rejects it no matter what the record's state is. |
 | `500` | Something went wrong on the server. Log it. Do not show details. |
 
 **Return `404` for other tenants' records, not `403`.** A `403` tells the caller that the record exists. A `404` reveals nothing.
@@ -90,7 +91,7 @@ Rules:
 Every editable record has a `version`.
 
 1. The client reads the record and gets `version: 7`.
-2. The client sends the update with `version: 7`.
+2. The client sends the update with the header `If-Match: "7"`. See `docs/decisions/0002-version-in-if-match-header.md`.
 3. The server applies the update only if the stored version is still `7`, and sets it to `8`.
 4. If the stored version is no longer `7`, the server returns `409 VERSION_CONFLICT` and changes nothing.
 
@@ -110,17 +111,17 @@ Use one list style across the project.
 
 ## Deleting
 
-- Put the version of the record to delete in the **query string**, such as `?version=7`, not in a request body. Some hosts drop bodies on `DELETE`.
+- Send the version of the record to delete in the `If-Match` header, such as `If-Match: "7"`. Do not use the query string or the body. Some hosts drop bodies on `DELETE`, and a version in the URL is written to logs.
 - If the record has history, refuse with `409` and a reason code, such as `ITEM_HAS_HISTORY`. Do not silently archive. Archive is a separate action (see `data-model.md`).
 
 ## Money and repeated requests
 
-For actions that move money, points, or other value, require an **idempotency key**. The client sends a unique key with each attempt. If the server sees the same key again, it returns the original result and does not run the action twice. This protects against double clicks and network retries.
+Actions that move money, points, or vouchers **require** an `Idempotency-Key` header. Create requests whose duplicate would cause harm, such as orders, should send one. The client sends a unique key with each attempt. If the server sees the same key again, it returns the stored response and does not run the action twice. Keys are kept for 24 hours. Reusing a key with a different request returns `422 IDEMPOTENCY_KEY_REUSED`. See `docs/decisions/0003-idempotency-key-scope.md`.
 
 ## Edge cases
 
 - **Partial failure.** A change that touches several rows must be one atomic write. Either every row changes, or none does.
 - **Large lists.** A list that can grow must be paginated. Never return every row.
 - **Breaking a field.** Adding a field is safe. Removing, renaming, or changing the meaning of a field breaks clients. Add the new field, keep the old one until clients move, then remove it in a separate change.
-- **Validation vs. business rules.** Invalid input is `400`. A valid request that breaks a business rule is usually `409` or `422`. Pick one and use it for the whole project.
+- **Validation vs. business rules.** Malformed input is `400`. A valid request that breaks a rule which does not depend on the record's state is `422`. A request that conflicts with the record's current state is `409`. See `docs/decisions/0001-business-rule-error-codes.md`.
 - **Dates and money in responses.** Send dates as ISO 8601 strings in UTC. Send money as integers in minor units with a currency code. Never send floats for money.
