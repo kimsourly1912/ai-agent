@@ -43,6 +43,8 @@ Use this checklist when you review a change, or before you ask someone to review
 - [ ] A new decision is recorded in `docs/decisions/`.
 - [ ] A changed term is updated in `docs/domain/glossary.md`.
 
-## Ask the author
+## Business and authorization rules
 
-- [ ] Is any business or authorization rule decided by the author, rather than confirmed by the owner? If yes, it should be an open question in the feature spec.
+- [ ] Every business or authorization rule in this change has a source: a feature spec's "Decided rules" table, a decision record, or the owner's message.
+- [ ] A rule with no source is listed as an open question in the feature spec. Its behavior is refused or disabled, not guessed.
+- [ ] No rule is "assumed" because the author or the agent inferred it from the code.

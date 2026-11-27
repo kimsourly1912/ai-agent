@@ -45,9 +45,17 @@ Follow `docs/standards/api.md` for response shape, versions, and errors.
 - `<Case>`: `<what should happen>`
 - `<Case, such as a stale version, a missing record, or a record in another tenant>`: `<what should happen>`
 
+## Decided rules
+
+Every business or authorization rule that the owner has decided. Fill in one row per rule. If the owner has not decided a rule, do not add it here. Add it under Open questions.
+
+| Rule | Decision | Decided by | Date | Source |
+|---|---|---|---|---|
+| `<rule>` | `<what was decided>` | `<owner name>` | `<YYYY-MM-DD>` | `<link to spec section, decision record, or message>` |
+
 ## Open questions
 
-Business or authorization rules that are not decided yet. Do not guess these. Write the question here, and build only the parts that do not depend on it.
+Business or authorization rules that are not decided yet. Do not guess these. Write the question here, and build only the parts that do not depend on it. Until the question is answered, refuse or disable the affected action.
 
 - `<Question>` (owner: `<name>`)
 
