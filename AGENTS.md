@@ -45,7 +45,8 @@ Classify the change **before you edit**. Then read the docs that apply. Read onl
 | API format, status codes, errors | `docs/standards/api.md` |
 | Which tests are required | `docs/standards/testing.md` |
 | Why a decision was made | `docs/decisions/` |
-| What a feature must do | `docs/features/<name>.md` |
+| What a feature must do | `docs/features/<name>.md` (copy `docs/features/_template.md`) |
+| Configuration, migrations, deploy, rollback | `docs/ops/operations.md` |
 
 If a doc does not exist yet, say so in your reply. Do not guess its content.
 
