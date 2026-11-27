@@ -1,18 +1,28 @@
 # Start a Feature
 
-Use this guide before you build any feature. It is written for people who are not sure how to describe what they want. The agent asks the questions. You answer in plain words. The agent writes the answers into a spec, and you confirm the spec before any code is written.
+Use this guide before you build any feature. It is written for people who are not sure how to describe what they want. The agent asks the questions. The user answers in plain words, or with a letter from a list. The agent writes the answers into a spec, and the user confirms the spec before any code is written.
 
 Use the **small** flow for one screen or one action. Use the **large** flow for anything that touches several features, adds tables, handles money, or needs more than one permission.
 
 ## Rules for the agent
 
 1. Do not write code until the user confirms the spec with a clear "yes."
-2. Ask one group of questions at a time. Never more than five questions in one message.
+2. Ask one checkpoint at a time. Never more than five questions in one message.
 3. Use plain words. If you must use a technical term, explain it in one short sentence.
-4. Accept "I don't know" as an answer. Write it as an open question. Do not guess.
-5. Write the answers into the spec file as you go. Do not wait until the end.
-6. Show the user a short summary at each checkpoint. Ask for confirmation before moving on.
-7. Refuse or skip any part that depends on an open question, and say which part.
+4. Give every question three things: why we ask, the choices, and a "not sure yet" choice. Never ask an open question with no choices.
+5. Mark who decides each question: the owner (boss) for product and permission rules, the user for choices about what they want to see first, and the agent for technical details that follow our standards.
+6. Accept "not sure yet" as an answer. Write it as an open question. Do not guess.
+7. Write the answers into the spec file as you go. Do not wait until the end.
+8. Show a short summary at each checkpoint. Wait for a clear "yes" before the next checkpoint.
+9. Refuse or skip any part that depends on an open question, and say which part.
+
+## What the agent may and may not decide
+
+| The agent may decide | The agent must not decide |
+|---|---|
+| Which tools and folders to use | Who can read or write |
+| How code is organized, following our standards | Whether a reader needs an account |
+| How to test a part | What the product is allowed to show |
 
 ## How to tell small from large
 
@@ -27,15 +37,42 @@ Use the **small** flow for one screen or one action. Use the **large** flow for 
 
 If any row says "Large," use the large flow.
 
+## Question format
+
+Every question follows this format. Use it in every checkpoint.
+
+```text
+N. The question, in plain words.
+   Why we ask: one sentence on what this decides.
+   Who decides: owner, user, or agent.
+   a) First choice, in plain words.
+   b) Second choice, in plain words.
+   c) Not sure yet. We'll leave it open.
+
+Example reply: "1a, 2b, 3c."
+```
+
+Add a choice for "something else" only when the list might not cover the answer.
+
+## When the owner has not answered
+
+If the user cannot answer a question that the owner decides, the agent writes a short message for the owner, using the same questions and choices. The user sends it and pastes the reply back.
+
+```text
+Hi, I'm starting the [feature] work. Please answer these quick questions so I can build the right part first:
+1. [question] a) [choice] b) [choice] c) not sure
+2. [question] a) [choice] b) [choice] c) not sure
+```
+
 ## Small flow
 
-Ask these five questions, one message at a time:
+Ask these five questions in the question format. Keep them in one message.
 
-1. Who uses this? (for example: staff, customers, the owner)
-2. What should they be able to do? (one sentence)
-3. What does success look like? (a concrete example)
-4. What must never happen? (for example: a customer must never see another customer's data)
-5. What is already decided, and by whom? (anything the boss has said)
+1. Who uses this? Choices: staff, customers, the owner, or something else.
+2. What should they be able to do? Choices: one sentence each, from the user's answer.
+3. What does success look like? Ask for one concrete example.
+4. What must never happen? Choices: a short list of examples, plus "not sure yet."
+5. What is already decided, and by whom? Ask the user to name the owner.
 
 Then write `docs/features/<name>.md` from the template. Show it to the user. Wait for "yes."
 
@@ -43,26 +80,25 @@ Then write `docs/features/<name>.md` from the template. Show it to the user. Wai
 
 A large feature is too big to specify in one go. Split it into slices first.
 
-### Checkpoint 1: The goal
+### Checkpoint 1: The first part to build
 
-Ask:
+Ask three questions in the question format:
 
-1. What problem does this solve, in one or two sentences?
-2. Who are the users? List each group.
-3. How will we know it worked? Give one real example.
-4. What is the first thing that must work, even if nothing else does?
+1. Who writes or changes the data? Who decides: owner.
+2. Who can see the data? Who decides: owner.
+3. What should work first? Choices: the smallest working part, such as "one item is created." Who decides: user and owner together.
 
-Write the answers into the top of the spec. Show the summary. Wait for "yes."
+Write the answers into the top of the spec. Show a summary, such as "Goal, users, and first part." Wait for "yes."
 
 ### Checkpoint 2: The decided rules
 
-Ask about each kind of rule. Accept "not decided" for any of them.
+Ask about each kind of rule, in the question format. Include "not sure yet" for each.
 
-- **Who may do what?** Which roles can see, change, or delete things?
-- **Money and points:** Is there any money, points, or voucher? Who may change the amounts?
-- **Limits:** Is there any rule about quantity, time, or amount?
-- **Data:** What must be kept forever, and what may be removed?
-- **Errors:** What should the user see when something goes wrong?
+- **Who may do what?** Which roles can see, change, or delete things? Who decides: owner.
+- **Money and points:** Is there any money, points, or voucher? If not, say so, and skip this question. Who decides: owner.
+- **Limits:** Is there any rule about quantity, time, or amount? Who decides: owner.
+- **Data:** When something is removed, should it be hidden or deleted for good? Who decides: owner.
+- **Errors:** What should the user see when something goes wrong? Who decides: user.
 
 For each answer:
 
@@ -91,7 +127,7 @@ For the slice to be built next, confirm:
 
 - Every rule it uses is in the Decided rules table.
 - Every open question it touches is either answered or has a safe behavior (refuse or disable).
-- The owner module or feature is known (see `docs/architecture/features.md`).
+- The owning feature is known (see `docs/architecture/features.md`).
 
 Then build that slice only. When it is done, go back to the user, show what works, and ask what to build next.
 
@@ -110,15 +146,16 @@ Use `docs/features/_template.md`. For a large feature, the spec must have:
 
 For a small feature:
 
-> I want to build [your idea]. Do not write code yet. Follow `docs/guides/start-a-feature.md`, small flow. Ask me the five questions one message at a time, in plain words. Then write `docs/features/<name>.md` and show it to me. Wait for my "yes."
+> I want to build [your idea]. Do not write code yet. Follow `docs/guides/start-a-feature.md`, small flow. Ask me the five questions in the question format, one message at a time, in plain words. Then write `docs/features/<name>.md` and show it to me. Wait for my "yes."
 
 For a large feature:
 
-> I want to build [your idea]. Do not write code yet. Follow `docs/guides/start-a-feature.md`, large flow. Start with Checkpoint 1. Ask only the questions for the current checkpoint. Show me a summary and wait for my "yes" before the next checkpoint.
+> I want to build [your idea]. Do not write code yet. Follow `docs/guides/start-a-feature.md`, large flow. Start with Checkpoint 1. Ask only the questions for the current checkpoint, in the question format. Show me a summary and wait for my "yes" before the next checkpoint.
 
 ## Edge cases
 
 - **The user changes their mind mid-feature.** Update the spec first. Show the change. Then continue. Do not change code before the spec.
 - **The user says "just do it."** Explain in one sentence that the open questions must be answered first, and list them. Offer to build the slices that do not depend on them.
-- **The user does not know the answer to a rule.** Write it as an open question, with the owner's name if known. This is a normal outcome, not a failure.
+- **The user does not know the answer to a rule.** Write it as an open question, and write the message for the owner. This is a normal outcome, not a failure.
+- **The owner gives very little context.** Ask the owner the same questions in the message format. Do not fill the gap by guessing.
 - **The feature grows during building.** Stop, update the spec, and confirm with the user before continuing.
