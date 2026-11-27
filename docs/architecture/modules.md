@@ -48,6 +48,8 @@ Each module must have one row. A module is not allowed to exist without a row.
 
 1. **One owner per table.** Only the owning module's repository reads or writes its tables.
 2. **Cross-module calls go through the public service only.** Module A calls `B.service` methods. It never imports `B.repository` and never joins `B`'s tables.
+   - Exception: a repository may **read** a few named columns of another module's table in a join (for example, a user's name for an audit log). Those columns must be listed in the shared table definitions, not written ad hoc.
+   - Write statements that span modules stay in one atomic write. The owner of the action asks the other module for its statements through its public service, then runs them together.
 3. **Routes hold no business rules.** A route parses the request, calls a service, and maps the result to a response.
 4. **Repositories hold no business rules.** They run queries and return data. Authorization and decisions live in the service.
 5. **Shared code is for stable concepts only.** Examples: pagination, error types, request context. Put code in `shared/` only after the same pattern appears in at least two modules. Do not predict a shared abstraction.
