@@ -120,8 +120,6 @@ Actions that move money, points, or vouchers **require** an `Idempotency-Key` he
 
 ## Edge cases
 
-- **Partial failure.** A change that touches several rows must be one atomic write. Either every row changes, or none does.
-- **Large lists.** A list that can grow must be paginated. Never return every row.
 - **Breaking a field.** Adding a field is safe. Removing, renaming, or changing the meaning of a field breaks clients. Add the new field, keep the old one until clients move, then remove it in a separate change.
 - **Validation vs. business rules.** Malformed input is `400`. A valid request that breaks a rule which does not depend on the record's state is `422`. A request that conflicts with the record's current state is `409`. See `docs/decisions/0001-business-rule-error-codes.md`.
 - **Dates and money in responses.** Send dates as ISO 8601 strings in UTC. Send money as integers in minor units with a currency code. Never send floats for money.

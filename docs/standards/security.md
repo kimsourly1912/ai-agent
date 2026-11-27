@@ -106,5 +106,3 @@ Some actions need the user to confirm again, even when already signed in. Exampl
 - **Role changed while the user is signed in.** The next permission check uses the new role. Do not cache permissions beyond one request, unless the cache is invalidated on change.
 - **Tenant suspended.** Decide this explicitly. Usually, reads are allowed for the owner, and writes are refused.
 - **Platform admin needs to help a tenant.** Use a time-limited, logged support grant. Do not give standing access.
-- **Two permissions overlap.** Keep both. The check asks for the one the action needs, not a broader one.
-- **Permission map grows.** Keep it in one file. A second file that lists permissions is a sign of drift.

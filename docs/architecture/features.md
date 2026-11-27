@@ -78,7 +78,7 @@ src/
 
 ## Enforcement
 
-Rules that exist only in this doc can be broken without anyone noticing. Enforce rule 2 with a lint rule. The example below blocks one feature from importing another feature's repository. Add one block per pair of features that must not depend on each other. Check the current ESLint docs for the syntax your version uses.
+Enforce rule 2 with a lint rule. The example below blocks one feature from importing another feature's repository. Add one block per pair of features that must not depend on each other. Check the current ESLint docs for the syntax your version uses.
 
 ```js
 // eslint.config.mjs (flat config, illustrative)
@@ -103,6 +103,4 @@ With many features, one block per pair becomes hard to keep correct. At that poi
 ## Edge cases
 
 - **Feature needs data from another feature.** Call that feature's service method. Do not join its tables.
-- **Two features need the same logic.** First ask whether one owns it. If neither owns it, it is a shared concept. Move it to `shared/` only if it is stable.
-- **A route needs to call two features.** Allowed. The route coordinates calls, but a business decision that spans both features belongs in one service, not in the route.
 - **A feature's table is referenced by another feature's table.** This is a foreign key. The owning feature decides the delete behavior, and it is documented in `docs/domain/data-model.md`.

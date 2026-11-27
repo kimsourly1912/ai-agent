@@ -74,5 +74,4 @@ When you report work as done, say what you ran and what passed. If a check could
 - **Test database differs from production.** If production uses a different database engine, some tests may pass locally and fail in production. Run the integration tests against an engine as close to production as you can, and note any gap.
 - **Mocked services hide real behavior.** A test that mocks the database cannot prove a query is correct. Use a real database for query tests.
 - **Flaky tests.** A test that sometimes fails is a bug. Fix it or remove it. Do not retry until it passes.
-- **Slow tests.** Keep most tests at the unit and integration level. Use end-to-end tests only for flows that cross many parts.
 - **New guards need new tests.** A pull request that adds a permission, lock, or version check must include the test and the guard check.

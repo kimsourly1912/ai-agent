@@ -83,6 +83,5 @@ See `docs/ops/operations.md` for the environments, who may deploy to each one, a
 ## Edge cases
 
 - **Service is down.** Decide what the user sees: a retry message, a cached value, or a refusal. Write the decision in the feature spec.
-- **Clock differences.** Store and compare times in UTC.
 - **Two servers at once.** Assume any request can run on any instance. Do not keep per-user state in memory between requests.
 - **External service changes its API.** Keep the integration in one place, so only one feature changes.

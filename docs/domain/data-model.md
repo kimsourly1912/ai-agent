@@ -101,7 +101,5 @@ Suppose an `order_line` refers to a `menu_item`. An order is history, so the men
 ## Edge cases
 
 - **Soft delete vs. archive.** Use archive for business records a user may restore. Use permanent delete only where no history refers to the row, or where the law requires erasure. Say which one applies in the entity section.
-- **Check at the database, not only in code.** A rule like "quantity is at least 1" belongs in a `CHECK` constraint. Application validation gives a better error message, but it does not replace the constraint.
-- **Concurrent writes.** When two requests change the same row, the version check decides which one wins. The second request gets `409`. See `docs/standards/api.md`.
 - **Adding a not-null column to a table with rows.** Give it a default, or fill it in a separate migration step before you make it required.
 - **Deleting a tenant.** Decide this explicitly. Usually a tenant is suspended, not deleted, because its history must stay.
