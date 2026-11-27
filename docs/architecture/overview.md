@@ -74,17 +74,11 @@ Rule: a side effect is written in the same transaction as the change that caused
 - **Source of truth:** the database. Anything not in the database can be lost.
 - **Cache:** safe to delete at any time. Never store a permission or a price only in a cache.
 - **Files:** in file storage, with a reference in the database.
-- **Secrets:** in the platform's secret store. Never in the repository.
+- **Secrets:** see `docs/standards/security.md`.
 
 ## Environments
 
-| Environment | Purpose | Data |
-|---|---|---|
-| Local | Development on one machine | Fake or seeded data |
-| Staging | Test before release | Copy or fake data, never real customer data |
-| Production | Real users | Real data |
-
-Changes move from local to staging to production. Production changes are made deliberately, not automatically.
+See `docs/ops/operations.md` for the environments, who may deploy to each one, and the order of changes.
 
 ## Edge cases
 

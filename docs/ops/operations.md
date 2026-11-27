@@ -34,13 +34,22 @@ Most production incidents are not code bugs. They are a wrong setting, a migrati
 
 ## Migrations
 
-Run in this order:
+For every environment, the first two steps come first:
 
 1. Write the migration. It must be backward compatible with the code that is running now.
 2. Test it on a copy of staging data, or on fake data of similar size.
-3. Run it on staging. Check the result.
-4. Deploy the code that uses the new schema.
-5. Run the migration on production, then deploy the code.
+
+Staging:
+
+3. Run the migration on staging.
+4. Deploy the code that uses the new schema to staging. Check the result.
+
+Production (only after staging passes):
+
+5. Run the migration on production.
+6. Deploy the code that uses the new schema to production.
+
+The migration always runs before the code that needs it, so the running code never sees a schema it does not understand.
 
 Rules:
 
