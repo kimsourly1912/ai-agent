@@ -12,7 +12,7 @@ Use the **small** flow for one screen or one action. Use the **large** flow for 
 4. Ask one open question first, then offer choices. Every question has a "something else" choice and a "not sure yet" choice. Do not offer choices alone, because they can lead the answer.
 5. Mark who decides each question: the owner (boss) for product and permission rules, the user for choices about what they want to see first, and the agent for technical details that follow our standards.
 6. Accept "not sure yet" as an answer. Write it as an open question. Do not guess.
-7. Write the answers into the spec file as you go. Do not wait until the end.
+7. Write the answers into the spec file as you go. Do not wait until the end. Create the file at Checkpoint 1 with `Status: draft`.
 8. Show a short summary at each checkpoint. Wait for a clear "yes" before the next checkpoint.
 9. Refuse or skip any part that depends on an open question, and say which part.
 10. At the end of every checkpoint, and at the end of the small flow, ask: "Is there anything else I should know?" Write any answer into the spec before the next step.
@@ -77,7 +77,7 @@ Ask these five questions in the question format. Keep them in one message.
 4. What must never happen? Choices: a short list of examples, plus "not sure yet."
 5. What is already decided, and by whom? Ask the user to name the owner.
 
-Then write `docs/features/<name>.md` from the template. Show it to the user. Wait for "yes."
+Then write `docs/features/<name>.md` from the template with `Status: draft`. Show it to the user. Wait for "yes." After "yes," set the status to `confirmed`, with the date and who confirmed it.
 
 ## Large flow
 
@@ -91,7 +91,7 @@ Ask three questions in the question format:
 2. Who can see the data? Who decides: owner.
 3. What should work first? Choices: the smallest working part, such as "one item is created." Who decides: user and owner together.
 
-Write the answers into the top of the spec. Show a summary, such as "Goal, users, and first part." Wait for "yes."
+Create `docs/features/<name>.md` with `Status: draft`. Write the Problem, Goal, users, and first part into it. Show a summary, such as "Goal, users, and first part." Wait for "yes."
 
 ### Checkpoint 2: The decided rules
 
@@ -123,7 +123,7 @@ For each slice, write:
 
 Put the slices in order. The first slice should be the smallest one that proves the idea. Show the list. Ask: "Is there anything else I should know?" Wait for "yes."
 
-Write each slice as a section in the spec. Do not put all slices in one file, unless the feature is small enough.
+Write the slices in the **Slices** section of the spec, in order. Write each slice's acceptance criteria under a heading for that slice, in Given / When / Then form. Keep everything in one spec file. Split it only if the spec goes past one page.
 
 ### Checkpoint 4: Definition of Ready (before building each slice)
 
@@ -133,7 +133,7 @@ For the slice to be built next, confirm:
 - Every open question it touches is either answered or has a safe behavior (refuse or disable).
 - The owning feature is known (see `docs/architecture/features.md`).
 
-Then build that slice only. When it is done, go back to the user, show what works, and ask what to build next.
+Then build that slice only. When it is done, set its status to `shipped` with the date, update `Last updated`, go back to the user, show what works, and ask what to build next.
 
 Review this checklist after each feature. If the same information keeps being missing, add it to the checklist, so the next feature asks for it at the start.
 
@@ -141,13 +141,17 @@ Review this checklist after each feature. If the same information keeps being mi
 
 Use `docs/features/_template.md`. For a large feature, the spec must have:
 
-- Goal and non-goals
+- Status, owner, and last updated date in the header
+- Problem, goal, and non-goals
 - Users and permissions
 - Decided rules table
 - Open questions
-- One section per slice, each with its own acceptance criteria
-- Data changes and delete behavior
+- Slices, in build order, each with its status
+- Acceptance criteria under a heading for each slice, in Given / When / Then form
+- Data changes and delete behavior, at the contract level (no code)
 - Owner of the spec, and when it is updated (for example, after each slice ships). A spec that nobody keeps up to date drifts from the code.
+
+Status moves in one direction at each step: `draft`, then `confirmed` after the user says "yes," then `shipped` for each slice. If the scope changes after confirmation, set the status back to `draft` until the user confirms again.
 
 ## Starter prompts
 
@@ -161,7 +165,7 @@ For a large feature:
 
 ## Edge cases
 
-- **The user changes their mind mid-feature.** Update the spec first. Show the change. Then continue. Do not change code before the spec.
+- **The user changes their mind mid-feature.** Update the spec first, set the status back to `draft`, show the change, and wait for "yes." Then continue. Do not change code before the spec.
 - **The user says "just do it."** Explain in one sentence that the open questions must be answered first, and list them. Offer to build the slices that do not depend on them.
 - **The user does not know the answer to a rule.** Write it as an open question, and write the message for the owner. This is a normal outcome, not a failure.
 - **The owner gives very little context.** Ask the owner the same questions in the message format. Do not fill the gap by guessing.
