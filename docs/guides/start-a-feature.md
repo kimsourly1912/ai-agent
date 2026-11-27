@@ -9,12 +9,13 @@ Use the **small** flow for one screen or one action. Use the **large** flow for 
 1. Do not write code until the user confirms the spec with a clear "yes."
 2. Ask one checkpoint at a time. Never more than five questions in one message.
 3. Use plain words. If you must use a technical term, explain it in one short sentence.
-4. Give every question three things: why we ask, the choices, and a "not sure yet" choice. Never ask an open question with no choices.
+4. Ask one open question first, then offer choices. Every question has a "something else" choice and a "not sure yet" choice. Do not offer choices alone, because they can lead the answer.
 5. Mark who decides each question: the owner (boss) for product and permission rules, the user for choices about what they want to see first, and the agent for technical details that follow our standards.
 6. Accept "not sure yet" as an answer. Write it as an open question. Do not guess.
 7. Write the answers into the spec file as you go. Do not wait until the end.
 8. Show a short summary at each checkpoint. Wait for a clear "yes" before the next checkpoint.
 9. Refuse or skip any part that depends on an open question, and say which part.
+10. At the end of every checkpoint, and at the end of the small flow, ask: "Is there anything else I should know?" Write any answer into the spec before the next step.
 
 ## What the agent may and may not decide
 
@@ -42,17 +43,19 @@ If any row says "Large," use the large flow.
 Every question follows this format. Use it in every checkpoint.
 
 ```text
-N. The question, in plain words.
+N. The open question, in plain words.
    Why we ask: one sentence on what this decides.
    Who decides: owner, user, or agent.
+   Describe it in your own words, or pick one:
    a) First choice, in plain words.
    b) Second choice, in plain words.
-   c) Not sure yet. We'll leave it open.
+   c) Something else. Describe it.
+   d) Not sure yet. We'll leave it open.
 
-Example reply: "1a, 2b, 3c."
+Example reply: "1a, 2b, 3d."
 ```
 
-Add a choice for "something else" only when the list might not cover the answer.
+The open question always comes first, so the user can answer in their own words. The choices are a guide, not the only answer. Always keep "something else" and "not sure yet."
 
 ## When the owner has not answered
 
@@ -105,7 +108,7 @@ For each answer:
 - If the owner decided it, add a row to the **Decided rules** table, with who decided and when.
 - If the owner did not decide it, add it to **Open questions**.
 
-Show both lists. Wait for "yes."
+Show both lists. Ask: "Is there anything else I should know?" Wait for "yes."
 
 ### Checkpoint 3: The slices
 
@@ -115,13 +118,14 @@ For each slice, write:
 
 - **Name:** a short label, such as "Create a booking."
 - **Done when:** one observable result.
+- **Acceptance criteria:** six to nine checks that confirm the slice works. If a slice needs ten or more, split it into two slices.
 - **Depends on:** other slices or open questions, if any.
 
-Put the slices in order. The first slice should be the smallest one that proves the idea. Show the list. Wait for "yes."
+Put the slices in order. The first slice should be the smallest one that proves the idea. Show the list. Ask: "Is there anything else I should know?" Wait for "yes."
 
 Write each slice as a section in the spec. Do not put all slices in one file, unless the feature is small enough.
 
-### Checkpoint 4: Before building each slice
+### Checkpoint 4: Definition of Ready (before building each slice)
 
 For the slice to be built next, confirm:
 
@@ -130,6 +134,8 @@ For the slice to be built next, confirm:
 - The owning feature is known (see `docs/architecture/features.md`).
 
 Then build that slice only. When it is done, go back to the user, show what works, and ask what to build next.
+
+Review this checklist after each feature. If the same information keeps being missing, add it to the checklist, so the next feature asks for it at the start.
 
 ## What the spec must contain
 
@@ -141,6 +147,7 @@ Use `docs/features/_template.md`. For a large feature, the spec must have:
 - Open questions
 - One section per slice, each with its own acceptance criteria
 - Data changes and delete behavior
+- Owner of the spec, and when it is updated (for example, after each slice ships). A spec that nobody keeps up to date drifts from the code.
 
 ## Starter prompts
 
