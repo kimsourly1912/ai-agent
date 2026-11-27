@@ -44,6 +44,8 @@ Classify the change **before you edit**. Then read the docs that apply. Read onl
 | Who may do what, tenant boundaries | `docs/standards/security.md` |
 | API format, status codes, errors | `docs/standards/api.md` |
 | Which tests are required | `docs/standards/testing.md` |
+| What a reviewer checks | `docs/standards/review.md` |
+| Index of all docs | `docs/README.md` |
 | Why a decision was made | `docs/decisions/` |
 | What a feature must do | `docs/features/<name>.md` (copy `docs/features/_template.md`) |
 | Configuration, migrations, deploy, rollback | `docs/ops/operations.md` |
