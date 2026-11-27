@@ -42,9 +42,10 @@ Use this checklist when you review a change, or before you ask someone to review
 - [ ] A changed rule is updated in the doc that owns it, not copied into another doc.
 - [ ] A new decision is recorded in `docs/decisions/`.
 - [ ] A changed term is updated in `docs/domain/glossary.md`.
+- [ ] A change that alters behavior updates the feature spec in the same pull request: Resume here, Observed behavior or Decided rules, and the Change log. A spec that falls behind the code is worse than none.
 
 ## Business and authorization rules
 
-- [ ] Every business or authorization rule in this change has a source: a feature spec's "Decided rules" table, a decision record, or the owner's message.
+- [ ] Every business or authorization rule in this change has a source: a feature spec's "Decided rules" table, a decision record, or the owner's message. The spec quotes the owner's exact words, so the source survives a broken link.
 - [ ] A rule with no source is listed as an open question in the feature spec. Its behavior is refused or disabled, not guessed.
 - [ ] No rule is "assumed" because the author or the agent inferred it from the code.

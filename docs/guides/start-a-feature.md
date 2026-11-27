@@ -107,7 +107,7 @@ Ask about each kind of rule, in the question format. Include "not sure yet" for 
 
 For each answer:
 
-- If the owner decided it, add a row to the **Decided rules** table, with who decided and when.
+- If the owner decided it, add a row to the **Decided rules** table, with who decided, when, and the owner's exact words. Links break; the words stay.
 - If the owner did not decide it, add it to **Open questions**.
 
 Show both lists. Ask: "Is there anything else I should know?" Wait for "yes."
@@ -154,12 +154,15 @@ Every statement in the spec gets one label:
 Steps for the agent:
 
 1. Create `docs/features/<name>.md` from the template with `Status: inferred from code, not confirmed`.
-2. Read the screens, components, and API calls. Write what they do under **Observed behavior**, with the file path for each line.
-3. For each block of code whose reason is not obvious, check git history, pull requests, and tickets. Write the reason and the evidence under **Why the code is this way**. If nothing is found, write "Unknown" and add an open question. Never invent a reason.
-4. Fill in **API used**: for each endpoint the screen needs, say whether it exists, whether it matches, and who owns it.
-5. Write a short message for the owner and the API owner with the open questions, using the owner message template. The user sends it.
-6. When someone answers, move the answer into **Decided rules**, with a name and a date. Remove the question.
-7. When the owner has confirmed the spec, set the status to `confirmed`.
+2. Fill in **Sources** with every link the user has: the requirement, the Figma frames, the tickets, and the API docs. Ask the user for any that are missing.
+3. Read the screens, components, and API calls. Write what they do under **Observed behavior**, with the file path for each line. Write every state a screen can show (loading, empty, error, no permission, and others) under **Screens and states**.
+4. For each block of code whose reason is not obvious, check git history, pull requests, and tickets. Write the reason and the evidence under **Why the code is this way**. If nothing is found, write "Unknown" and add an open question. Never invent a reason. If git history or tickets were not available (for example, only one folder was shared), say so under the table.
+5. Fill in **API used**: for each endpoint the screen needs, say whether it exists, whether it matches, and who owns it.
+6. Ask the user for the change they need to make, in the owner's exact words. Write it under **Change request**, with a row for each difference between what the code does today and what is wanted. Mark each row that depends on an open question.
+7. Write a short message for the owner and the API owner with the open questions, using the owner message template. The user sends it.
+8. When someone answers, move the answer into **Decided rules**, with a name, a date, and the owner's exact words. Remove the question.
+9. Write the slices and acceptance criteria from the change request, not from the whole feature.
+10. When the owner has confirmed the spec, set the status to `confirmed`.
 
 Do not copy an Observed line into Decided rules unless someone has confirmed it.
 
@@ -169,11 +172,13 @@ If the agent is not available, do the same work by hand. Each step maps to the a
 
 - [ ] Open `docs/features/<name>.md`. Read **Resume here** first. It tells you where you stopped.
 - [ ] For a feature with no spec, copy `docs/features/_template.md` and set `Status: inferred from code, not confirmed`.
-- [ ] Read the screens and API calls. Write what they do under **Observed behavior**.
-- [ ] For each odd block of code, check git history and the tickets. Write the reason and the evidence, or write "Unknown."
+- [ ] Fill in **Sources** with the links to the requirement, the Figma frames, the tickets, and the API docs.
+- [ ] Read the screens and API calls. Write what they do under **Observed behavior**. Write each screen's states under **Screens and states**.
+- [ ] Run `git log -- <feature folder>` and read the pull requests. For each odd block of code, write the reason and the evidence, or write "Unknown."
 - [ ] Fill in **API used**. Mark each endpoint as exists or missing.
+- [ ] Write the change you were asked to make under **Change request**, in the owner's exact words, and list what differs from today.
 - [ ] Send the open questions to the owner and the API owner, using the owner message template.
-- [ ] When someone answers, move the answer into **Decided rules** with a name and a date.
+- [ ] When someone answers, move the answer into **Decided rules** with a name, a date, and their exact words.
 - [ ] When the owner changes the feature, update the spec first, add a row to **Change log**, then change the code.
 - [ ] Update **Resume here** and commit.
 
@@ -183,13 +188,15 @@ Use `docs/features/_template.md`. For a large feature, the spec must have:
 
 - Status, owner, and last updated date in the header
 - A **Resume here** block, updated after every step
+- **Sources**: links to the requirement, design frames, tickets, and API docs
 - Problem, goal, and non-goals
 - Users and permissions
 - Decided rules table
 - Open questions
 - Slices, in build order, each with its status
 - Acceptance criteria under a heading for each slice, in Given / When / Then form
-- For an existing feature: Observed behavior, and the reason for each odd block of code
+- **Screens and states** for every screen: loading, empty, error, no permission, and other states
+- For an existing feature: Observed behavior, the reason for each odd block of code, and a **Change request** that the slices come from
 - For a feature that calls an API it does not own: the **API used** table
 - Data changes and delete behavior, at the contract level (no code)
 - A **Change log** with one row for each change made after confirmation
@@ -209,7 +216,7 @@ For a large feature:
 
 For an existing feature:
 
-> I need to work on [feature], which already exists in the code but has no spec. Do not change any code yet. Follow `docs/guides/start-a-feature.md`, "Document an existing feature." Create the spec with `Status: inferred from code, not confirmed`. Label everything Observed, Decided, or Unknown. Do not guess reasons. Write the open questions as a message I can send to the owner and the API owner.
+> I need to work on [feature], which already exists in the code but has no spec. Do not change any code yet. Follow `docs/guides/start-a-feature.md`, "Document an existing feature." Create the spec with `Status: inferred from code, not confirmed`. Label everything Observed, Decided, or Unknown. Do not guess reasons. Write the open questions as a message I can send to the owner and the API owner. The change I need to make is: [one sentence, in the owner's words, or "not known yet"].
 
 ## Edge cases
 
