@@ -16,7 +16,7 @@ Use the exact term from this glossary in code, docs, and the UI. Do not invent a
 | User | A person who can sign in. A user may belong to several tenants. | A member, who belongs to one tenant | `account` |
 | Owner | A member with full control of a tenant | Platform admin, who manages the whole system | `admin` (ambiguous) |
 | Platform admin | A staff member of the service itself. Not part of any tenant. | Owner of a tenant | `superuser` |
-| Module | One feature area with one owner and a public service | A folder, or a file | `feature` (in code), `service` |
+| Feature | One area of the product with one owner, one folder, and one public service. Its spec lives in `docs/features/<name>.md`. | A folder, or a file | `module`, `area` |
 | Version | A counter that changes on every edit, used to detect stale updates | A timestamp, or the software release number | `revision` (choose one of the two) |
 | Archive | Hide a record from lists, keep its history, and allow restore | Delete | `soft delete`, `trash` |
 | Delete | Remove a record permanently. Only allowed when no history refers to it. | Archive | `remove` (choose one) |

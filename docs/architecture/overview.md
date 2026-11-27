@@ -40,16 +40,16 @@ Server: check permission
   ↓
 Server: validate input
   ↓
-Module service: apply business rules
+Feature service: apply business rules
   ↓
-Module repository: query database (scoped to tenant)
+Feature repository: query database (scoped to tenant)
   ↓
 Database
   ↓
 Response back to client
 ```
 
-The details of each step are in `security.md`, `api.md`, and `modules.md`.
+The details of each step are in `security.md`, `api.md`, and `features.md`.
 
 ## Background work
 
@@ -91,4 +91,4 @@ Changes move from local to staging to production. Production changes are made de
 - **Service is down.** Decide what the user sees: a retry message, a cached value, or a refusal. Write the decision in the feature spec.
 - **Clock differences.** Store and compare times in UTC.
 - **Two servers at once.** Assume any request can run on any instance. Do not keep per-user state in memory between requests.
-- **External service changes its API.** Keep the integration in one place, so only one module changes.
+- **External service changes its API.** Keep the integration in one place, so only one feature changes.

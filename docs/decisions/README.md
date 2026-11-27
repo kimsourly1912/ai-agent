@@ -6,7 +6,7 @@ Records important architecture and product decisions, and the reasons for them. 
 
 Write one when a choice:
 
-- affects more than one module, or the database schema,
+- affects more than one feature, or the database schema,
 - had real alternatives, and someone may later ask "why not X?",
 - is hard or expensive to reverse.
 

@@ -26,7 +26,7 @@ Each rule below is a short pointer. The full rule lives in the linked doc. Do no
 - Preserve security, permissions, and data integrity. If a rule is unclear, ask. Do not guess. See `docs/standards/security.md`.
 - Tenant data is always scoped to its tenant. See `docs/standards/security.md` and `docs/domain/data-model.md`.
 - The server decides identity and permissions. See `docs/standards/security.md`.
-- Each module owns its tables and is used only through its public service. See `docs/architecture/modules.md`.
+- Each feature owns its tables and is used only through its public service. See `docs/architecture/features.md`.
 - Edits carry the version that was read. Stale edits are refused. See `docs/standards/api.md`.
 - Database constraints are the final integrity check. See `docs/domain/data-model.md`.
 - Secrets never go into code, docs, or replies. See `docs/standards/security.md`.
@@ -38,7 +38,7 @@ Classify the change **before you edit**. Then read the docs that apply. Read onl
 | Task | Read |
 |---|---|
 | How the system fits together | `docs/architecture/overview.md` |
-| Which module owns this code, and what may depend on what | `docs/architecture/modules.md` |
+| Which feature owns this code, and what may depend on what | `docs/architecture/features.md` |
 | Tables, relations, constraints, delete behavior | `docs/domain/data-model.md` |
 | Meaning of domain terms | `docs/domain/glossary.md` |
 | Who may do what, tenant boundaries | `docs/standards/security.md` |
@@ -53,8 +53,8 @@ If a doc does not exist yet, say so in your reply. Do not guess its content.
 ## How to work
 
 1. Classify the task and read the docs that apply (see the table above).
-2. Find the owning module in `docs/architecture/modules.md`. Put code there.
-3. Read the existing code in that module and follow its patterns. Do not invent a new pattern when one exists.
+2. Find the owning feature in `docs/architecture/features.md`. Put code there.
+3. Read the existing code in that feature and follow its patterns. Do not invent a new pattern when one exists.
 4. Add or update tests for the change, as required by `docs/standards/testing.md`.
 5. Run typecheck, lint, and tests before you report the work as done.
 6. If the docs and the code disagree, say so in your reply. Do not silently pick one.

@@ -36,7 +36,7 @@ Every project must have these tests, or record in `docs/decisions/` why one is s
 4. **Constraint test.** For each unique or check constraint, try to break it. Confirm the database refuses the write.
 5. **Atomic write test.** For each write that touches several rows, make one step fail. Confirm that no row changed.
 6. **Idempotency test.** For each money or points action, send the same key twice. Confirm the action ran once.
-7. **Module boundary check.** Confirm that no module reads another module's repository or tables. Enforce this with the lint rule in `docs/architecture/modules.md`, and run lint in CI so a broken boundary fails the build.
+7. **Feature boundary check.** Confirm that no feature reads another feature's repository or tables. Enforce this with the lint rule in `docs/architecture/features.md`, and run lint in CI so a broken boundary fails the build.
 8. **Audit test.** For each privileged write, confirm that an audit event is recorded. Then make the audit write fail and confirm that the change does not apply.
 
 ## The guard check

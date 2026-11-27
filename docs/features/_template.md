@@ -28,7 +28,7 @@ Describe the main flow in order. Use numbered steps.
 
 ## Data
 
-- Owner module: `<module>` (see `docs/architecture/modules.md`)
+- Owner feature: `<feature>` (see `docs/architecture/features.md`)
 - Tables added or changed: `<tables>` (see `docs/domain/data-model.md`)
 - Delete behavior: `<archive, delete, or history rule>`
 

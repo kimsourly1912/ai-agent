@@ -9,7 +9,7 @@ A database is the last place where wrong data can be stopped. If the relation ru
 
 ## Mental model
 
-- An **entity** is one kind of record, such as `<Entity>`. Each entity has one owner module.
+- An **entity** is one kind of record, such as `<Entity>`. Each entity has one owner feature.
 - A **relation** links two entities. Every relation has a delete rule.
 - A **constraint** is a rule the database enforces, such as "unique per tenant" or "amount is not negative."
 - **History** is data that must stay explainable later. History is never deleted. A correction is a new record, not an edit of the old one.
@@ -17,7 +17,7 @@ A database is the last place where wrong data can be stopped. If the relation ru
 ## Flow for a change
 
 ```text
-Decide the entity and its owner module
+Decide the entity and its owner feature
         ↓
 Add the tenant column, version column, and timestamps
         ↓
@@ -52,9 +52,9 @@ These apply to every table unless a row below says otherwise.
 
 One row per entity. Fill this in before you write the migration.
 
-| Entity | Owner module | Tenant-owned | Versioned | Archive or delete | Key constraints |
+| Entity | Owner feature | Tenant-owned | Versioned | Archive or delete | Key constraints |
 |---|---|---|---|---|---|
-| `<Entity>` | `<module>` | yes | yes | archive | `<unique(tenant_id, name)>` |
+| `<Entity>` | `<feature>` | yes | yes | archive | `<unique(tenant_id, name)>` |
 
 ## Relations
 
@@ -83,7 +83,7 @@ Copy this block for each entity. Keep it short.
 
 ### `<Entity>`
 
-- Owner: `<module>`
+- Owner: `<feature>`
 - Purpose: `<one sentence>`
 - Columns that matter: `<id, tenant_id, version, status, ...>`
 - Constraints: `<unique, check, not null rules>`
