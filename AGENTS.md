@@ -10,6 +10,9 @@ Replace every `<placeholder>` with your project's value. Delete any section that
 - Name: `<project name>`
 - Purpose: `<one sentence: what the system does and for whom>`
 - Stack: `<language, framework, database, hosting>`
+- Type: `<fullstack | frontend-only | backend-only>`
+
+Rules and docs marked (backend) apply to fullstack and backend-only projects. Those marked (frontend) apply to fullstack and frontend-only projects. Delete what does not apply to this Type. See "Which docs apply" in `docs/README.md`.
 
 ## Commands
 
@@ -17,18 +20,19 @@ Replace every `<placeholder>` with your project's value. Delete any section that
 - Dev server: `<command>`
 - Test: `<command>`
 - Typecheck and lint: `<command>`
-- Database migrations: `<command>`
+- (backend) Database migrations: `<command>`
 
 ## Essential rules
 
 Each rule below is a short pointer. The full rule lives in the linked doc. Do not copy it back into this file.
 
 - Preserve security, permissions, and data integrity. If a rule is unclear, ask. Do not guess. See `docs/standards/security.md`.
-- Tenant data is always scoped to its tenant. See `docs/standards/security.md` and `docs/domain/data-model.md`.
-- The server decides identity and permissions. See `docs/standards/security.md`.
-- Each feature owns its tables and is used only through its public service. See `docs/architecture/features.md`.
+- (backend) Tenant data is always scoped to its tenant. See `docs/standards/security.md` and `docs/domain/data-model.md`.
+- The server decides identity and permissions. The screen never does. See `docs/standards/security.md`.
+- Each feature owns its code and data, and is used only through its public face. See `docs/architecture/features.md`.
 - Edits carry the version that was read. Stale edits are refused. See `docs/standards/api.md`.
-- Database constraints are the final integrity check. See `docs/domain/data-model.md`.
+- (backend) Database constraints are the final integrity check. See `docs/domain/data-model.md`.
+- (frontend) Every screen shows every state (loading, empty, error, no permission), and a response that fails its model shows an error, never an empty screen. See `docs/standards/frontend.md`.
 - Secrets never go into code, docs, or replies. See `docs/standards/security.md`.
 
 ## Load context for the task
@@ -39,7 +43,8 @@ Classify the change **before you edit**. Then read the docs that apply. Read onl
 |---|---|
 | How the system fits together | `docs/architecture/overview.md` |
 | Which feature owns this code, and what may depend on what | `docs/architecture/features.md` |
-| Tables, relations, constraints, delete behavior | `docs/domain/data-model.md` |
+| (backend) Tables, relations, constraints, delete behavior | `docs/domain/data-model.md` |
+| (frontend) Screens, components, data loading, forms, and states | `docs/standards/frontend.md` |
 | Meaning of domain terms | `docs/domain/glossary.md` |
 | Who may do what, tenant boundaries | `docs/standards/security.md` |
 | API format, status codes, errors | `docs/standards/api.md` |
@@ -67,7 +72,7 @@ If a doc does not exist yet, say so in your reply. Do not guess its content.
 
 ## Ask before you
 
-- Change the database schema, or run a migration that deletes or rewrites data.
+- (backend) Change the database schema, or run a migration that deletes or rewrites data.
 - Change a decision recorded in `docs/decisions/`.
 - Add a dependency, or change deployment or environment configuration.
 - Delete data, files, or branches.

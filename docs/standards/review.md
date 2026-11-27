@@ -16,14 +16,14 @@ Use this checklist when you review a change, or before you ask someone to review
 - [ ] Identity and tenant come from server context, not from the request body.
 - [ ] No secrets, tokens, or personal data appear in code, logs, or responses.
 
-## Data
+## Data (backend)
 
 - [ ] New tables and columns follow the conventions in `docs/domain/data-model.md`.
 - [ ] Every relation has an explicit delete rule.
 - [ ] Unique and check rules exist in the database, not only in code.
 - [ ] Business records are archived. Nothing with history is deleted.
 
-## Writes and API
+## Writes and API (backend)
 
 - [ ] Editable records check the version (see `docs/standards/api.md`). A stale edit returns `409`.
 - [ ] Writes that touch several rows run in one atomic write.
@@ -31,6 +31,15 @@ Use this checklist when you review a change, or before you ask someone to review
 - [ ] Money, points, and vouchers require an `Idempotency-Key` (see `docs/decisions/0003-idempotency-key-scope.md`).
 - [ ] Errors use the standard shape and codes. Rule violations use `422`; state conflicts use `409`.
 - [ ] The response is mapped to its shape. No raw rows are returned.
+
+## Screens (frontend)
+
+- [ ] Every state in the feature spec's Screens and states is built (loading, empty, error with retry, no permission, partial).
+- [ ] Data goes through a hook and a model. No component calls the API (see `docs/standards/frontend.md`).
+- [ ] A response that fails its model shows an error, not an empty screen.
+- [ ] Each write disables while it runs, shows its result, and handles a stale edit (`409`).
+- [ ] Hiding or disabling a control is not the only protection. The server checks the same rule.
+- [ ] Unsaved changes are visible and guarded. Controls have labels, and the keyboard reaches everything.
 
 ## Tests
 

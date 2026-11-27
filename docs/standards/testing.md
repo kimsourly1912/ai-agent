@@ -28,7 +28,7 @@ Use the lowest level that proves the rule. A rule about a database constraint ne
 
 ## Required tests
 
-Every project must have these tests, or record in `docs/decisions/` why one is skipped.
+Every project that owns a backend (fullstack or backend-only) must have these tests, or record in `docs/decisions/` why one is skipped. A frontend-only project uses "Frontend tests" below instead.
 
 1. **Permission test.** For each protected route, test: no session, wrong tenant, missing permission, and allowed.
 2. **Tenant isolation test.** For each tenant-owned table, create data in two tenants. Confirm that tenant A cannot read, update, or delete tenant B's data.
@@ -38,6 +38,17 @@ Every project must have these tests, or record in `docs/decisions/` why one is s
 6. **Idempotency test.** For each money or points action, send the same key twice. Confirm the action ran once.
 7. **Feature boundary check.** Confirm that no feature reads another feature's repository or tables. Enforce this with the lint rule in `docs/architecture/features.md`, and run lint in CI so a broken boundary fails the build.
 8. **Audit test.** For each privileged write, confirm that an audit event is recorded. Then make the audit write fail and confirm that the change does not apply.
+
+## Frontend tests
+
+Every fullstack and frontend-only project must have these tests, or record in `docs/decisions/` why one is skipped. See `docs/standards/frontend.md`.
+
+1. **State test.** For each state in the spec's Screens and states (loading, empty, error with retry, no permission, partial), render the screen and check what the user sees.
+2. **Contract test.** Send a response that fails the model. Confirm the screen shows an error, not an empty list.
+3. **Action test.** For each write, confirm it sends the right request (including the version or draft id), disables while it runs, shows the result, and reloads the data.
+4. **Stale edit test.** Make the server answer `409`. Confirm the user sees that the change did not apply, and nothing was overwritten.
+5. **Guard test.** For each rule that blocks an action in the screen (for example, "approve stays disabled until the checklist is done"), test it, then run the guard check below. The screen guard is for the user's comfort. The server guard has its own test in a backend project.
+6. **Pure function test.** Unit-test every util and model transform.
 
 ## The guard check
 
@@ -73,5 +84,6 @@ When you report work as done, say what you ran and what passed. If a check could
 
 - **Test database differs from production.** If production uses a different database engine, some tests may pass locally and fail in production. Run the integration tests against an engine as close to production as you can, and note any gap.
 - **Mocked services hide real behavior.** A test that mocks the database cannot prove a query is correct. Use a real database for query tests.
+- **Mocked APIs hide contract drift.** A frontend test with a mocked API passes even when the real API changes. Build the mock responses from the generated API types, so a contract change breaks the test.
 - **Flaky tests.** A test that sometimes fails is a bug. Fix it or remove it. Do not retry until it passes.
 - **New guards need new tests.** A pull request that adds a permission, lock, or version check must include the test and the guard check.
