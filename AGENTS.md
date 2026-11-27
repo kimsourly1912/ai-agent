@@ -49,6 +49,7 @@ Classify the change **before you edit**. Then read the docs that apply. Read onl
 | Why a decision was made | `docs/decisions/` |
 | What a feature must do | `docs/features/<name>.md` (copy `docs/features/_template.md`) |
 | A new feature, from an idea to a confirmed spec | `docs/guides/start-a-feature.md` (do not write code until the spec is confirmed) |
+| An existing feature with no spec | `docs/guides/start-a-feature.md`, "Document an existing feature" (label what you find as Observed, Decided, or Unknown; do not guess reasons) |
 | Configuration, migrations, deploy, rollback | `docs/ops/operations.md` |
 
 If a doc does not exist yet, say so in your reply. Do not guess its content.

@@ -4,6 +4,8 @@ Use this guide before you build any feature. It is written for people who are no
 
 Use the **small** flow for one screen or one action. Use the **large** flow for anything that touches several features, adds tables, handles money, or needs more than one permission.
 
+If the feature already exists in code and has no spec, use **Document an existing feature** first. If you have no agent (for example, your usage ran out), use **Without the agent**. Both are near the end of this guide.
+
 ## Rules for the agent
 
 1. Do not write code until the user confirms the spec with a clear "yes."
@@ -12,7 +14,7 @@ Use the **small** flow for one screen or one action. Use the **large** flow for 
 4. Ask one open question first, then offer choices. Every question has a "something else" choice and a "not sure yet" choice. Do not offer choices alone, because they can lead the answer.
 5. Mark who decides each question: the owner (boss) for product and permission rules, the user for choices about what they want to see first, and the agent for technical details that follow our standards.
 6. Accept "not sure yet" as an answer. Write it as an open question. Do not guess.
-7. Write the answers into the spec file as you go. Do not wait until the end. Create the file at Checkpoint 1 with `Status: draft`.
+7. Write the answers into the spec file as you go. Do not wait until the end. Create the file at Checkpoint 1 with `Status: draft`. After every step, update the **Resume here** block and commit. Do not wait until the end, because the agent can stop at any time.
 8. Show a short summary at each checkpoint. Wait for a clear "yes" before the next checkpoint.
 9. Refuse or skip any part that depends on an open question, and say which part.
 10. At the end of every checkpoint, and at the end of the small flow, ask: "Is there anything else I should know?" Write any answer into the spec before the next step.
@@ -137,18 +139,60 @@ Then build that slice only. When it is done, set its status to `shipped` with th
 
 Review this checklist after each feature. If the same information keeps being missing, add it to the checklist, so the next feature asks for it at the start.
 
+## Document an existing feature
+
+Use this when the code exists but no spec does. The code shows what the feature does, not why. Do this once per feature, when you are about to work on it. Do not document the whole app at once.
+
+Every statement in the spec gets one label:
+
+| Label | Meaning |
+|---|---|
+| Observed | Seen in the code. True today, but it may not be intended. |
+| Decided | Confirmed by the owner or the API owner, with a name and a date. |
+| Unknown | Nobody has said. It goes in Open questions. |
+
+Steps for the agent:
+
+1. Create `docs/features/<name>.md` from the template with `Status: inferred from code, not confirmed`.
+2. Read the screens, components, and API calls. Write what they do under **Observed behavior**, with the file path for each line.
+3. For each block of code whose reason is not obvious, check git history, pull requests, and tickets. Write the reason and the evidence under **Why the code is this way**. If nothing is found, write "Unknown" and add an open question. Never invent a reason.
+4. Fill in **API used**: for each endpoint the screen needs, say whether it exists, whether it matches, and who owns it.
+5. Write a short message for the owner and the API owner with the open questions, using the owner message template. The user sends it.
+6. When someone answers, move the answer into **Decided rules**, with a name and a date. Remove the question.
+7. When the owner has confirmed the spec, set the status to `confirmed`.
+
+Do not copy an Observed line into Decided rules unless someone has confirmed it.
+
+## Without the agent
+
+If the agent is not available, do the same work by hand. Each step maps to the agent steps above.
+
+- [ ] Open `docs/features/<name>.md`. Read **Resume here** first. It tells you where you stopped.
+- [ ] For a feature with no spec, copy `docs/features/_template.md` and set `Status: inferred from code, not confirmed`.
+- [ ] Read the screens and API calls. Write what they do under **Observed behavior**.
+- [ ] For each odd block of code, check git history and the tickets. Write the reason and the evidence, or write "Unknown."
+- [ ] Fill in **API used**. Mark each endpoint as exists or missing.
+- [ ] Send the open questions to the owner and the API owner, using the owner message template.
+- [ ] When someone answers, move the answer into **Decided rules** with a name and a date.
+- [ ] When the owner changes the feature, update the spec first, add a row to **Change log**, then change the code.
+- [ ] Update **Resume here** and commit.
+
 ## What the spec must contain
 
 Use `docs/features/_template.md`. For a large feature, the spec must have:
 
 - Status, owner, and last updated date in the header
+- A **Resume here** block, updated after every step
 - Problem, goal, and non-goals
 - Users and permissions
 - Decided rules table
 - Open questions
 - Slices, in build order, each with its status
 - Acceptance criteria under a heading for each slice, in Given / When / Then form
+- For an existing feature: Observed behavior, and the reason for each odd block of code
+- For a feature that calls an API it does not own: the **API used** table
 - Data changes and delete behavior, at the contract level (no code)
+- A **Change log** with one row for each change made after confirmation
 - Owner of the spec, and when it is updated (for example, after each slice ships). A spec that nobody keeps up to date drifts from the code.
 
 Status moves in one direction at each step: `draft`, then `confirmed` after the user says "yes," then `shipped` for each slice. If the scope changes after confirmation, set the status back to `draft` until the user confirms again.
@@ -162,6 +206,10 @@ For a small feature:
 For a large feature:
 
 > I want to build [your idea]. Do not write code yet. Follow `docs/guides/start-a-feature.md`, large flow. Start with Checkpoint 1. Ask only the questions for the current checkpoint, in the question format. Show me a summary and wait for my "yes" before the next checkpoint.
+
+For an existing feature:
+
+> I need to work on [feature], which already exists in the code but has no spec. Do not change any code yet. Follow `docs/guides/start-a-feature.md`, "Document an existing feature." Create the spec with `Status: inferred from code, not confirmed`. Label everything Observed, Decided, or Unknown. Do not guess reasons. Write the open questions as a message I can send to the owner and the API owner.
 
 ## Edge cases
 
